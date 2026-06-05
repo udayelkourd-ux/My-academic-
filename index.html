@@ -2,54 +2,42 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>أكاديمية فانتازي</title>
+    <title>لوحة تحكم كابتن Oday</title>
     <style>
-        body { font-family: sans-serif; background: #0f172a; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .box { background: #1e293b; padding: 25px; border-radius: 20px; width: 320px; text-align: center; }
-        .card { border: 3px solid #fbbf24; padding: 20px; border-radius: 15px; background: #0f172a; }
-        .row { display: flex; justify-content: space-between; margin: 10px 0; border-bottom: 1px solid #334155; padding-bottom: 5px; }
-        input { width: 100%; padding: 10px; margin: 10px 0; background: #334155; border: none; border-radius: 5px; color: white; }
-        button { width: 100%; padding: 10px; background: #38bdf8; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .hidden { display: none; }
+        body { font-family: sans-serif; background: #0f172a; color: white; padding: 20px; }
+        .box { background: #1e293b; padding: 20px; border-radius: 15px; max-width: 400px; margin: auto; }
+        input { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: none; }
+        button { width: 100%; padding: 10px; background: #38bdf8; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div id="loginSection" class="box">
-        <h2>تسجيل الدخول</h2>
-        <input type="text" id="user" placeholder="اسم المستخدم">
-        <input type="password" id="pass" placeholder="كلمة المرور">
-        <button onclick="login()">دخول</button>
-    </div>
-
-    <div id="cardSection" class="box hidden">
-        <h2>بطاقة اللاعب</h2>
-        <div class="card" id="playerCard">
-            </div>
-        <br>
-        <button onclick="location.reload()">خروج</button>
+    <div id="adminPanel" class="box">
+        <h2>إضافة لاعب جديد</h2>
+        <input type="text" id="pName" placeholder="اسم اللاعب">
+        <input type="text" id="pPhone" placeholder="رقم الجوال">
+        <input type="date" id="pBirth">
+        <label><input type="checkbox" id="pFee"> دفع الرسوم الشهرية؟</label>
+        <label><input type="checkbox" id="pKit"> دفع رسوم الزي؟</label>
+        <input type="number" id="pDone" placeholder="عدد التمارين المنجزة">
+        <button onclick="savePlayer()">حفظ وإصدار البطاقة</button>
     </div>
 
     <script>
-        function login() {
-            let user = document.getElementById("user").value;
-            // محاكاة بيانات لاعب (سنربطها لاحقاً بقاعدة بيانات)
-            if(user === "player") {
-                document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('cardSection').classList.remove('hidden');
-                document.getElementById('playerCard').innerHTML = `
-                    <h3>الاسم: محمد أحمد</h3>
-                    <div class="row"><span>تاريخ الميلاد:</span><span>2010/05/12</span></div>
-                    <div class="row"><span>رقم الجوال:</span><span>059xxxxxxx</span></div>
-                    <div class="row"><span>الاشتراك الشهري:</span><span>✅ مدفوع</span></div>
-                    <div class="row"><span>رسوم الزي:</span><span>❌ غير مدفوع</span></div>
-                    <div class="row"><span>التمرينات المنجزة:</span><span>15</span></div>
-                    <div class="row"><span>التمرينات المتبقية:</span><span>5</span></div>
-                    <div style="margin-top:15px; color:#fbbf24;">ملاحظات الكابتن: التزم بالحضور في الموعد!</div>
-                `;
-            } else {
-                alert("بيانات غير صحيحة");
-            }
+        function savePlayer() {
+            // هنا يتم حفظ البيانات في مصفوفة برمجية
+            let player = {
+                name: document.getElementById('pName').value,
+                phone: document.getElementById('pPhone').value,
+                fee: document.getElementById('pFee').checked ? "مدفوع" : "غير مدفوع",
+                kit: document.getElementById('pKit').checked ? "مدفوع" : "غير مدفوع"
+            };
+            
+            // إصدار اسم مستخدم وكلمة مرور للاعب تلقائياً
+            let username = player.name.replace(/\s+/g, '').toLowerCase();
+            let password = Math.floor(1000 + Math.random() * 9000);
+            
+            alert("تم إضافة اللاعب بنجاح!\nاسم المستخدم: " + username + "\nكلمة المرور: " + password);
         }
     </script>
 </body>
