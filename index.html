@@ -2,36 +2,55 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>أكاديمية فانتازي - تسجيل الدخول</title>
+    <title>أكاديمية فانتازي - الدخول</title>
     <style>
         body { font-family: sans-serif; background: #0f172a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
         .box { background: #1e293b; padding: 30px; border-radius: 20px; width: 300px; text-align: center; }
+        button { width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; }
+        .btn-player { background: #38bdf8; color: #0f172a; }
+        .btn-captain { background: #fbbf24; color: #0f172a; }
         input { width: 100%; padding: 12px; margin: 10px 0; background: #334155; border: none; border-radius: 8px; color: white; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #38bdf8; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h2>تسجيل الدخول</h2>
+
+    <!-- واجهة الاختيار -->
+    <div id="selection" class="box">
+        <h2>اختر نوع الدخول</h2>
+        <button class="btn-player" onclick="showLogin('player')">دخول كلاعب</button>
+        <button class="btn-captain" onclick="showLogin('captain')">دخول ككابتن</button>
+    </div>
+
+    <!-- واجهة تسجيل الدخول (مخفية في البداية) -->
+    <div id="loginForm" class="box hidden">
+        <h2 id="loginTitle">تسجيل الدخول</h2>
         <input type="text" id="user" placeholder="اسم المستخدم">
         <input type="password" id="pass" placeholder="كلمة المرور">
-        <button onclick="checkLogin()">دخول</button>
+        <button class="btn-player" onclick="verify()">دخول</button>
+        <button style="background:none; color:white;" onclick="location.reload()">رجوع</button>
     </div>
 
     <script>
-        function checkLogin() {
+        let currentRole = '';
+
+        function showLogin(role) {
+            currentRole = role;
+            document.getElementById('selection').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('loginTitle').innerText = (role === 'captain') ? "دخول الكابتن" : "دخول اللاعب";
+        }
+
+        function verify() {
             let user = document.getElementById("user").value;
             let pass = document.getElementById("pass").value;
 
-            // نظام الصلاحيات
-            if (user === "Captain" && pass === "123456") {
-                alert("أهلاً بك يا كابتن Oday في لوحة التحكم");
-                // هنا سنوجهك لاحقاً لصفحة الإدارة
-            } else if (user === "Player" && pass === "player123") {
-                alert("مرحباً بك في الأكاديمية");
-                // هنا سيذهب اللاعب لبطاقته
+            if (currentRole === 'captain' && user === "Oday" && pass === "123") {
+                alert("أهلاً بك يا كابتن Oday");
+            } else if (currentRole === 'player' && user === "Player" && pass === "123") {
+                alert("أهلاً بك في أكاديميتك");
             } else {
-                alert("خطأ: غير مصرح لك بالدخول، يرجى التواصل مع الكابتن.");
+                alert("بيانات خاطئة!");
             }
         }
     </script>
